@@ -164,3 +164,47 @@ def render_sprite(species: str, eye: str, hat: str) -> list:
     if not lines[0].strip():
         lines = lines[1:]
     return lines
+
+
+# ─── OUTPUT ──────────────────────────────────────────────────────────────────
+
+RARITY_COLORS = {
+    'common':    '\033[90m',
+    'uncommon':  '\033[32m',
+    'rare':      '\033[34m',
+    'epic':      '\033[35m',
+    'legendary': '\033[33m',
+}
+RESET = '\033[0m'
+
+
+def _bar(value: int, width: int = 10) -> str:
+    filled = round(value / 100 * width)
+    return '█' * filled + '░' * (width - filled)
+
+
+def render(companion: dict, name: str) -> str:
+    rarity  = companion['rarity']
+    color   = RARITY_COLORS[rarity]
+    stars   = RARITY_STARS[rarity]
+    shiny_s = ' ✨' if companion['shiny'] else ''
+
+    sprite = render_sprite(companion['species'], companion['eye'], companion['hat'])
+
+    info = [
+        f"{color}{name}{RESET}",
+        f"{color}{stars} {rarity}{shiny_s}{RESET}",
+    ]
+
+    mid = len(sprite) // 2
+    out = []
+    for i, line in enumerate(sprite):
+        info_part = info[i - mid] if 0 <= (i - mid) < len(info) else ''
+        out.append(f"  {line}  {info_part}")
+
+    out.append('')
+
+    for stat, val in companion['stats'].items():
+        out.append(f"  {stat:<11}  {color}{_bar(val)}{RESET}  {val}")
+
+    return '\n'.join(out)

@@ -102,5 +102,45 @@ class TestSprites(unittest.TestCase):
             self.assertIsInstance(lines, list)
             self.assertGreater(len(lines), 0)
 
+class TestRender(unittest.TestCase):
+    def _make_companion(self, rarity='uncommon'):
+        return {
+            'rarity': rarity,
+            'species': 'duck',
+            'eye': '·',
+            'hat': 'none',
+            'shiny': False,
+            'stats': {'DEBUGGING': 80, 'PATIENCE': 30, 'CHAOS': 50, 'WISDOM': 60, 'SNARK': 45},
+        }
+
+    def test_render_contains_name(self):
+        from buddy import render
+        out = render(self._make_companion(), 'Dusty Goose')
+        self.assertIn('Dusty Goose', out)
+
+    def test_render_contains_stars(self):
+        from buddy import render
+        out = render(self._make_companion('uncommon'), 'X')
+        self.assertIn('★★', out)
+
+    def test_render_contains_shiny_marker_when_shiny(self):
+        from buddy import render
+        c = self._make_companion()
+        c['shiny'] = True
+        out = render(c, 'X')
+        self.assertIn('✨', out)
+
+    def test_render_contains_all_stat_names(self):
+        from buddy import render, STAT_NAMES
+        out = render(self._make_companion(), 'X')
+        for stat in STAT_NAMES:
+            self.assertIn(stat, out)
+
+    def test_render_bar_length(self):
+        from buddy import _bar
+        self.assertEqual(len(_bar(0)),   10)
+        self.assertEqual(len(_bar(100)), 10)
+        self.assertEqual(len(_bar(50)),  10)
+
 if __name__ == '__main__':
     unittest.main()
