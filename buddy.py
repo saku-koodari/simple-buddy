@@ -208,3 +208,16 @@ def render(companion: dict, name: str) -> str:
         out.append(f"  {stat:<11}  {color}{_bar(val)}{RESET}  {val}")
 
     return '\n'.join(out)
+
+
+# ─── MAIN ────────────────────────────────────────────────────────────────────
+
+def main():
+    user = os.environ.get('USER') or os.environ.get('USERNAME') or 'anon'
+    companion = roll_companion(user)
+    name = roll_name()
+    print(render(companion, name))
+
+
+if __name__ == '__main__':
+    main()
