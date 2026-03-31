@@ -21,6 +21,12 @@ A terminal tamagotchi. Because a $380B company put one in their CLI and we thoug
 python3 buddy.py
 ```
 
+For a live view that refreshes every second with colors:
+
+```bash
+watch --color -n1 "python3 buddy.py"
+```
+
 That's it. That's the whole interface.
 
 ## How it works
