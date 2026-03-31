@@ -73,11 +73,11 @@ def _roll_stats(rng, rarity: str) -> dict:
     stats = {}
     for name in STAT_NAMES:
         if name == peak:
-            stats[name] = min(100, floor + 50 + int(rng() * 30))
+            stats[name] = min(100, floor + 50 + int(random.random() * 30))
         elif name == dump:
-            stats[name] = max(1, floor - 10 + int(rng() * 15))
+            stats[name] = max(1, floor - 10 + int(random.random() * 15))
         else:
-            stats[name] = floor + int(rng() * 40)
+            stats[name] = floor + int(random.random() * 40)
     return stats
 
 
