@@ -119,3 +119,48 @@ NOUNS = [
 def roll_name() -> str:
     """Random name each run — uses system random, not the deterministic PRNG."""
     return f"{random.choice(ADJECTIVES)} {random.choice(NOUNS)}".title()
+
+
+# ─── SPRITES ─────────────────────────────────────────────────────────────────
+
+# Frame 0 only. {E} is substituted with the rolled eye character at render time.
+SPRITES = {
+    'duck':     ['            ', '    __      ', '  <({E} )___  ', '   (  ._>   ', '    `--´    '],
+    'goose':    ['            ', '     ({E}>    ', '     ||     ', '   _(__)_   ', '    ^^^^    '],
+    'blob':     ['            ', '   .----.   ', '  ( {E}  {E} )  ', '  (      )  ', '   `----´   '],
+    'cat':      ['            ', '   /\\_/\\    ', '  ( {E}   {E})  ', '  (  ω  )   ', '  (")_(")   '],
+    'dragon':   ['            ', '  /^\\  /^\\  ', ' <  {E}  {E}  > ', ' (   ~~   ) ', '  `-vvvv-´  '],
+    'octopus':  ['            ', '   .----.   ', '  ( {E}  {E} )  ', '  (______)  ', '  /\\/\\/\\/\\  '],
+    'owl':      ['            ', '   /\\  /\\   ', '  (({E})({E}))  ', '  (  ><  )  ', '   `----´   '],
+    'penguin':  ['            ', '  .---.     ', '  ({E}>{E})     ', ' /(   )\\    ', '  `---´     '],
+    'turtle':   ['            ', '   _,--._   ', '  ( {E}  {E} )  ', ' /[______]\\ ', '  ``    ``  '],
+    'snail':    ['            ', ' {E}    .--.  ', '  \\  ( @ )  ', '   \\_`--´   ', '  ~~~~~~~   '],
+    'ghost':    ['            ', '   .----.   ', '  / {E}  {E} \\  ', '  |      |  ', '  ~`~``~`~  '],
+    'axolotl':  ['            ', '}~(______)~{', '}~({E} .. {E})~{', '  ( .--. )  ', '  (_/  \\_)  '],
+    'capybara': ['            ', '  n______n  ', ' ( {E}    {E} ) ', ' (   oo   ) ', '  `------´  '],
+    'cactus':   ['            ', ' n  ____  n ', ' | |{E}  {E}| | ', ' |_|    |_| ', '   |    |   '],
+    'robot':    ['            ', '   .[||].   ', '  [ {E}  {E} ]  ', '  [ ==== ]  ', '  `------´  '],
+    'rabbit':   ['            ', '   (\\__/)   ', '  ( {E}  {E} )  ', ' =(  ..  )= ', '  (")__(")  '],
+    'mushroom': ['            ', ' .-o-OO-o-. ', '(__________)', '   |{E}  {E}|   ', '   |____|   '],
+    'chonk':    ['            ', '  /\\    /\\  ', ' ( {E}    {E} ) ', ' (   ..   ) ', '  `------´  '],
+}
+
+HAT_LINES = {
+    'none':      '',
+    'crown':     '   \\^^^/    ',
+    'tophat':    '   [___]    ',
+    'propeller': '    -+-     ',
+    'halo':      '   (   )    ',
+    'wizard':    '    /^\\     ',
+    'beanie':    '   (___)    ',
+    'tinyduck':  '    ,>      ',
+}
+
+
+def render_sprite(species: str, eye: str, hat: str) -> list:
+    lines = [line.replace('{E}', eye) for line in SPRITES[species]]
+    if hat != 'none' and not lines[0].strip():
+        lines[0] = HAT_LINES[hat]
+    if not lines[0].strip():
+        lines = lines[1:]
+    return lines

@@ -77,5 +77,30 @@ class TestName(unittest.TestCase):
         names = {roll_name() for _ in range(20)}
         self.assertGreater(len(names), 1)
 
+class TestSprites(unittest.TestCase):
+    def test_render_sprite_substitutes_eye(self):
+        from buddy import render_sprite
+        lines = render_sprite('duck', '·', 'none')
+        joined = '\n'.join(lines)
+        self.assertIn('·', joined)
+        self.assertNotIn('{E}', joined)
+
+    def test_render_sprite_applies_hat(self):
+        from buddy import render_sprite
+        lines = render_sprite('duck', '·', 'crown')
+        self.assertIn('^^^', lines[0])
+
+    def test_render_sprite_drops_blank_hat_slot(self):
+        from buddy import render_sprite
+        lines_no_hat = render_sprite('duck', '·', 'none')
+        self.assertFalse(lines_no_hat[0].strip() == '')
+
+    def test_all_species_render_without_error(self):
+        from buddy import render_sprite, SPECIES
+        for species in SPECIES:
+            lines = render_sprite(species, '·', 'none')
+            self.assertIsInstance(lines, list)
+            self.assertGreater(len(lines), 0)
+
 if __name__ == '__main__':
     unittest.main()
