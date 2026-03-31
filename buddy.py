@@ -94,3 +94,28 @@ def roll_companion(user: str) -> dict:
         'rarity': rarity, 'species': species, 'eye': eye,
         'hat': hat, 'shiny': shiny, 'stats': stats,
     }
+
+
+# ─── NAME ────────────────────────────────────────────────────────────────────
+
+ADJECTIVES = [
+    'dusty', 'ancient', 'swift', 'tiny', 'cosmic', 'grumpy', 'fuzzy', 'silent',
+    'brave', 'soggy', 'crispy', 'gentle', 'wild', 'sleepy', 'curious', 'mighty',
+    'rusty', 'glowing', 'frozen', 'bouncy', 'sneaky', 'hollow', 'golden', 'mossy',
+    'stormy', 'fluffy', 'gloomy', 'radiant', 'spiky', 'wandering', 'humble',
+    'twitchy', 'serene', 'grizzled', 'damp', 'luminous', 'crinkled', 'bashful',
+    'wobbly', 'brittle',
+]
+
+NOUNS = [
+    'goose', 'pebble', 'claw', 'ember', 'mist', 'bramble', 'flicker', 'dusk',
+    'twig', 'stone', 'shadow', 'ripple', 'hollow', 'spark', 'drift', 'burrow',
+    'grove', 'tide', 'vale', 'flint', 'wisp', 'brook', 'fern', 'crater',
+    'gust', 'knoll', 'marsh', 'peak', 'shard', 'thicket', 'vapor', 'haven',
+    'ledge', 'cove', 'bloom', 'spore', 'frond', 'glow', 'shell', 'haze',
+]
+
+
+def roll_name() -> str:
+    """Random name each run — uses system random, not the deterministic PRNG."""
+    return f"{random.choice(ADJECTIVES)} {random.choice(NOUNS)}".title()

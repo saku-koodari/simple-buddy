@@ -61,5 +61,21 @@ class TestRoll(unittest.TestCase):
                 break
         self.assertTrue(found, "Couldn't find a common-rarity user in 200 tries")
 
+class TestName(unittest.TestCase):
+    def test_roll_name_is_title_case(self):
+        from buddy import roll_name
+        name = roll_name()
+        self.assertEqual(name, name.title())
+
+    def test_roll_name_is_two_words(self):
+        from buddy import roll_name
+        name = roll_name()
+        self.assertEqual(len(name.split()), 2)
+
+    def test_roll_name_varies(self):
+        from buddy import roll_name
+        names = {roll_name() for _ in range(20)}
+        self.assertGreater(len(names), 1)
+
 if __name__ == '__main__':
     unittest.main()
